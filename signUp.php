@@ -5,10 +5,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sign up</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
 <body>
-  <script src="https://cdn.tailwindcss.com"></script>
   <header class="text-black body-font bg-purple-700 h-16 flex align-center items-center">
     <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
       <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
@@ -45,37 +45,47 @@
         <h2 class="text-gray-900 text-lg font-medium title-font mb-5">
           Sign Up
         </h2>
-        <div class="relative mb-4">
-          <label for="full-name" class="leading-7 text-sm text-gray-600">User Name</label>
-          <input type="text" id="full-name" name="full-name" class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
-        </div>
-        <div class="relative mb-4">
-          <label for="password" class="leading-7 text-sm text-gray-600">Password</label>
-          <input type="email" id="password" name="email" class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
-        </div>
-        <button id="signUp" class="text-white bg-blue-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">
-          Sign up
-        </button>
+
+        <!-- form starts -->
+
+
+        <form method="post">
+          <div class="relative mb-4">
+
+            <label for="email" class="leading-7 text-sm text-gray-600">User Name</label>
+            <input type="text" id="email" name="email" class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+          </div>
+          <div class="relative mb-4">
+            <label for="password" class="leading-7 text-sm text-gray-600">Password</label>
+            <input type="password" id="password" name="password" class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+          </div>
+          <input value="Sign Up" name="submit" type="submit" id="signUp" class="text-white bg-blue-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">
+        </form>
+
+        <!-- form ends here -->
+
+
         <div class="text-xs text-gray-500 mt-3">
           <p class="inline-block">Already have an account?</p>
-          <a href="/frontend/components/login/login.html"><span class="text-blue-500 text-md">Login</span></a>
+          <a href="/frontend/components/login/login.php"><span class="text-blue-500 text-md">Login</span></a>
         </div>
       </div>
     </div>
   </section>
   <?php
-  include('/backend/index.php');
+  include('./logic.php');
+  if (isset($_POST['submit'])) {
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    $isSignnedUp = signUp($email, $password);
+    if($isSignnedUp) {
+      echo 'done';
+    } else {
+      echo 'not done';
+    }
+  }
   ?>
-  <!-- <script>
-    const email = document.querySelector("#full-name").value;
-    const password = document.querySelector("#password").value;
-    const signUpUser = document.querySelector("#signUp");
 
-    signUpUser.addEventListener("click", () => {
-      const response = signUp(email, password);
-      response ? console.log('success ') : console.log('failed');;
-    })
-  </script> -->
 </body>
 
 </html>

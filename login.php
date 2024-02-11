@@ -82,34 +82,39 @@
           <h2 class="text-gray-900 text-lg font-medium title-font mb-5">
             Login
           </h2>
+
+          <form method="post">
           <div class="relative mb-4">
-            <label for="full-name" class="leading-7 text-sm text-gray-600"
+            <label for="email" class="leading-7 text-sm text-gray-600"
               >Email or phone number</label
             >
             <input
-              type="text"
-              id="full-name"
-              name="full-name"
-              class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-            />
-          </div>
-          <div class="relative mb-4">
-            <label for="login-password" class="leading-7 text-sm text-gray-600"
-              >Password</label
-            >
-            <input
+              id="email"
               type="email"
-              id="login-password"
               name="email"
               class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
             />
           </div>
-          <button
-            id="login"
+          <div class="relative mb-4">
+            <label for="password" class="leading-7 text-sm text-gray-600"
+              >Password</label
+            >
+            <input
+              id="password"
+              type="password"
+              name="password"
+              class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+            />
+          </div>
+          <input
+            type="submit"
+            value="Login"
+            name="submit"
             class="text-white bg-blue-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg font-bold"
           >
-            Login
-          </button>
+          </form>
+
+
           <div
             class="text-xs text-gray-500 mt-3 flex items-center justify-center"
           >
@@ -124,16 +129,18 @@
         </div>
       </div>
     </section>
-    <script>
-      import {login} from "/backend/index.php"
-      const email = document.querySelector("#full-name").value;
-      const password = document.querySelector("#login-password").value;
-      const loginData = document.querySelector("#login");
-
-      loginData.addEventListener('click', () => {
-        login(email, password)
-      })
-
-    </script>
+    <?php
+    include('./logic.php');
+    if (isset($_POST['submit'])) {
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+        $isLoggedIn = login($email, $password);
+        if($isLoggedIn) {
+          echo 'logged';
+        }else {
+          echo 'not logged';
+        }
+    }
+    ?>
   </body>
 </html>

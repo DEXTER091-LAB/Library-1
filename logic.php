@@ -6,7 +6,7 @@ $email = 'me';
 $password = 'me';
 
 // Uncomment and use the functions as needed
-// echo(signUp($email, $password));
+// echo(signUp($email, $password)); done   
 // echo(login($email, $password));
 // echo(addBook('book1', 'author1', 'genre1', 10));
 // echo(getBookInformation(1)['title']);
@@ -19,11 +19,8 @@ if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
-function login($email, $password)
-{
+function login($email, $password) {
     global $conn, $UserRole;
-    
-    
     // Retrieve hashed password from the database
     $sql = "SELECT * FROM User WHERE email='$email'";
     $result = mysqli_query($conn, $sql);
@@ -44,8 +41,7 @@ function login($email, $password)
     }
 }
 
-function signUp($email, $password)
-{
+function signUp($email, $password) {
     global $conn;
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT); // Using bcrypt for password hashing
     $sql = "INSERT INTO User (email, password) VALUES ('$email', '$hashedPassword')";
@@ -57,8 +53,7 @@ function signUp($email, $password)
     }
 }
 
-function deleteUser($email)
-{
+function deleteUser($email){
     global $conn;
     if (hasIssuedBooks($email)) {
         return false;
@@ -72,8 +67,7 @@ function deleteUser($email)
     }
 }
 
-function getBookInformation($bookId)
-{
+function getBookInformation($bookId){
     global $conn;
     $sql = "SELECT * FROM Book WHERE id='$bookId';";
     $result = mysqli_query($conn, $sql);
@@ -85,8 +79,7 @@ function getBookInformation($bookId)
     }
 }
 
-function makeReservation($userId, $bookId)
-{
+function makeReservation($userId, $bookId){
     global $conn;
     $existingReservationSql = "SELECT * FROM Reservation WHERE bookId=?";
     $stmt = mysqli_prepare($conn, $existingReservationSql);
@@ -127,8 +120,7 @@ function makeReservation($userId, $bookId)
     }
 }
 
-function provideFeedback($userId, $bookId, $rating, $comment)
-{
+function provideFeedback($userId, $bookId, $rating, $comment){
     global $conn;
     
     // Check if the user has already provided feedback for the book
@@ -163,8 +155,7 @@ function provideFeedback($userId, $bookId, $rating, $comment)
     }
 }
 
-function addBook($title, $author, $genre, $quantity)
-{
+function addBook($title, $author, $genre, $quantity){
     global $conn;
     $sql = "INSERT INTO Book (title, author, genre, Quantity) VALUES ('$title', '$author', '$genre', '$quantity')";
     $result = mysqli_query($conn, $sql);
@@ -175,8 +166,7 @@ function addBook($title, $author, $genre, $quantity)
     }
 }
 
-function hasIssuedBooks($userId)
-{
+function hasIssuedBooks($userId){
     global $conn;
     $bookSQL = "SELECT * FROM Book WHERE takenById='$userId';";
     $bookquery = mysqli_query($conn, $bookSQL);
@@ -193,8 +183,7 @@ function hasIssuedBooks($userId)
     }
 }
 
-function issueBook($userId, $bookId)
-{
+function issueBook($userId, $bookId){
     global $conn;
     
     // Check if the book is already issued to the user
