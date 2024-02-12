@@ -35,6 +35,7 @@ include('./logic.php');
       </button>
     </div>
   </header>
+  <div></div>
   <section class="text-gray-600 body-font">
     <div class="container px-5 py-24 mx-auto flex flex-wrap items-center">
       <div class="lg:w-3/5 md:w-1/2 md:pr-16 lg:pr-0 pr-0">
