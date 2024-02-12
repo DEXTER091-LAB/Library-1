@@ -1,26 +1,27 @@
 <?php
+
 $conn = mysqli_connect("localhost", "root", "", "library");
 $UserRole = "";
 
-$email = 'me';
-$password = 'me';
 
 // Uncomment and use the functions as needed
 // echo(signUp($email, $password)); done   
-// echo(login($email, $password));
-// echo(addBook('book1', 'author1', 'genre1', 10));
+// echo(login($email, $password)); done
+// echo(addBook('book1', 'author1', 'genre1', 10)); done
 // echo(getBookInformation(1)['title']);
 // echo(makeReservation(1, 1));
 // echo(issueBook(1, 1));
 // echo(provideFeedback(1, 1, 5, 'good book'));
 
-
 if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
-function login($email, $password) {
+function login($email, $password)
+{
     global $conn, $UserRole;
+    
+    
     // Retrieve hashed password from the database
     $sql = "SELECT * FROM User WHERE email='$email'";
     $result = mysqli_query($conn, $sql);
@@ -52,6 +53,31 @@ function signUp($email, $password) {
         return false;
     }
 }
+
+function getUserIdByEmail($email) {
+    global $conn;
+    $sql = "SELECT id FROM User WHERE email='$email'";
+    $result = mysqli_query($conn, $sql);
+    if ($result && mysqli_num_rows($result) > 0) {
+        $user = mysqli_fetch_assoc($result);
+        return $user['id'];
+    } else {
+        return false;
+    }
+}
+
+function getBookIdByTitle($title) {
+    global $conn;
+    $sql = "SELECT id FROM Book WHERE title='$title'";
+    $result = mysqli_query($conn, $sql);
+    if ($result && mysqli_num_rows($result) > 0) {
+        $book = mysqli_fetch_assoc($result);
+        return $book['id'];
+    } else {
+        return false;
+    }
+}
+
 
 function deleteUser($email){
     global $conn;
@@ -165,6 +191,7 @@ function addBook($title, $author, $genre, $quantity){
         return false;
     }
 }
+
 
 function hasIssuedBooks($userId){
     global $conn;

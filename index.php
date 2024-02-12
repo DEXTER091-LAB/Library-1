@@ -20,6 +20,7 @@
         <a class="mr-5 hover:text-gray-900">Sign in</a>
         <a href="./login.php" class="mr-5 hover:text-gray-900">Login</a>
         <a class="mr-5 hover:text-gray-900">Logout</a>
+        <a href="./addBook.php" class="mr-5 hover:text-gray-900">Add Book</a>
       </nav>
       <button class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">Get Started
         <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-1" viewBox="0 0 24 24">
