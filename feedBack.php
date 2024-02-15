@@ -1,11 +1,10 @@
 <?php
 include './logic.php';
-
+setcookie("try",'12', time() + (86400 * 30), "/");
 // Check if the form is submitted
 if (isset($_POST['submit'])) {
     $rating = $_POST['rating'];
     $comment = $_POST['comment'];
-
     //Check if the 'book_title' cookie is set
     if (isset($_COOKIE['book_id'])) {
         $bookId = $_COOKIE['book_id'];

@@ -1,3 +1,18 @@
+<?php
+include('./logic.php');
+if (isset($_POST['submit'])) {
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    $isLoggedIn = login($email, $password);
+    if($isLoggedIn) {
+        // Set a cookie for the user's email
+        setcookie('email', $email, time() + (86400 * 30), "./feedBack.php"); // Cookie lasts for 30 days
+        echo '<p class="text-green-500">Logged in successfully.</p>';
+    } else {
+        echo '<p class="text-red-500">Invalid email or password.</p>';
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -74,21 +89,6 @@
                 >
             </form>
 
-            <!-- Display login status message -->
-            <?php
-            include('./logic.php');
-            if (isset($_POST['submit'])) {
-                $email = $_POST['email'];
-                $password = $_POST['password'];
-                $isLoggedIn = login($email, $password);
-                if($isLoggedIn) {
-                    echo '<p class="text-green-500">Logged in successfully.</p>';
-                } else {
-                    echo '<p class="text-red-500">Invalid email or password.</p>';
-                }
-            }
-            ?>
-            
             <div
                 class="text-xs text-gray-500 mt-3 flex items-center justify-center"
             >

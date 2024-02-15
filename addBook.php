@@ -9,7 +9,7 @@ if (isset($_POST['submit'])) {
     $quantity = $_POST['quantity'];
     $id = getBookIdByTitle($book);
     // Set a cookie for the book title
-    setcookie('book_id', $id, time() + (86400 * 30), "/"); // Cookie lasts for 30 days
+    setcookie('book_id', $id, time() + (86400 * 30), "./feedBack.php"); // Cookie lasts for 30 days
     
     // Attempt to add the book
     $isAdded = addBook($book, $author, $genre, $quantity);

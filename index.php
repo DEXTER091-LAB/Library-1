@@ -30,6 +30,7 @@
     </div>
   </header>
   <?php
+  echo $_COOKIE['email'];
   ?>
 </body>
 </html>

@@ -7,15 +7,9 @@ if (isset($_POST['submit'])) {
     $password = $_POST['password'];
     
     // Set a cookie for the email
-    setcookie('email', $email, time() + (86400 * 30), "/"); // Cookie lasts for 30 days
-    echo $_COOKIE['email'];
+    setcookie('email', $email, time() + (86400 * 30), "./feedBack.php"); // Cookie lasts for 30 days
     // Attempt to sign up the user
     $isSignedUp = signUp($email, $password);
-    if ($isSignedUp) {
-        echo 'done';
-    } else {
-        echo 'not done';
-    }
 }
 ?>
 <!DOCTYPE html>
