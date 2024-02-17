@@ -140,6 +140,7 @@ function getTotalBooks(){
     }
 
 }
+
 function getAvailableBooks(){
     global $conn;
     $sql = "SELECT * FROM Book WHERE status='AVILAIBLE'";
@@ -150,6 +151,7 @@ function getAvailableBooks(){
         return 0;
     }
 }
+
 function getBorrowedBooks(){
     global $conn;
     $sql = "SELECT * FROM Book WHERE status='TAKEN'";
@@ -279,6 +281,7 @@ function deleteBook($id){
         return false; // Book does not exist
     }
 }
+
 function loopGOAround(){
     global $conn;
     $count=0;
@@ -291,6 +294,34 @@ function loopGOAround(){
     }
     }
 }
+
+
+
+//
+function redirectToDashboard($email)
+{
+    global $conn;
+    
+    $sql = "SELECT * FROM `User` WHERE `email` = ?";
+    
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "s", $email);
+    mysqli_stmt_execute($stmt);
+    
+    $result = mysqli_stmt_get_result($stmt);
+    $user = mysqli_fetch_assoc($result);
+    
+    if ($user && $user['role'] === 'ADMIN') {
+        header('Location: dashboard.php');
+    } else {
+        header('Location: content.php');
+    }
+    exit;
+}
+
+//
+
+
 
 function editBook($bookId, $bookName, $author, $genre, $quantity)
 {

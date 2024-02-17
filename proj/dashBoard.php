@@ -67,7 +67,7 @@ if (isset($_POST['deleteBookBtn'])) {
 </head>
 
 <body class="bg-gray-100 font-sans leading-normal tracking-normal">
-
+    
     <!-- Header -->
     <header>
         <nav aria-label="menu nav" class="bg-gray-800 py-4">
