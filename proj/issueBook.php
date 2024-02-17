@@ -1,3 +1,21 @@
+<?php 
+include '../logic.php';
+
+if (isset($_POST['sign_out'])) {
+    if (isset($_COOKIE['email'])) {
+        $deleted = deleteUser($_COOKIE['email']);
+        
+        if ($deleted) {
+            setcookie('email', '', time() - 3600, '/');
+            header('Location: index.php');
+            exit;
+        }
+    } else {
+        echo 'Email not found to delete';
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -86,7 +104,6 @@
             </button>
         </form>
         <?php
-        include '../logic.php';
 
         if (isset($_POST['submit'])) {
             if (!empty($_POST["email"]) && !empty($_POST["book"])) {
@@ -115,6 +132,7 @@
                 echo "<p class='text-red-600 mt-4'>Please provide both User Email and Book Name.</p>";
             }
         }
+        
         ?>
     </div>
     <script>

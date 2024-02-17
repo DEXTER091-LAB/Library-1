@@ -1,18 +1,3 @@
-<?php
-include('../logic.php');
-if (isset($_POST['submit'])) {
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-    $isLoggedIn = login($email, $password);
-    if ($isLoggedIn) {
-        setcookie('email', $email, time() + (86400 * 30), "./feedBack.php");
-        header('Location: content.php');
-        exit;
-    } else {
-        echo '<p class="text-red-500">Invalid email or password.</p>';
-    }
-}
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -63,6 +48,21 @@ if (isset($_POST['submit'])) {
                             <a href="#" class="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500 text-white">Forgot password?</a>
                         </div>
                         <button type="submit" name="submit" class="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Sign in</button>
+                        <?php
+                        include('../logic.php');
+                        if (isset($_POST['submit'])) {
+                            $email = $_POST['email'];
+                            $password = $_POST['password'];
+                            $isLoggedIn = login($email, $password);
+                            if ($isLoggedIn) {
+                                setcookie('email', $email, time() + (86400 * 30), "./feedBack.php");
+                                header('Location: content.php');
+                                exit;
+                            } else {
+                                echo '<p class="text-red-500">Invalid email or password.</p>';
+                            }
+                        }
+                        ?>
                         <p class="text-sm font-light text-gray-500 dark:text-gray-400">
                             Don’t have an account yet? <a href="./signup.php" class="font-medium text-primary-600 hover:underline dark:text-primary-500">Sign up</a>
                         </p>

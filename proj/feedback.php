@@ -22,7 +22,19 @@ function fetchAllRatings($conn)
         echo "<p class='text-red-600'>No feedback entries found.</p>";
     }
 }
-
+if (isset($_POST['sign_out'])) {
+    if (isset($_COOKIE['email'])) {
+        $deleted = deleteUser($_COOKIE['email']);
+        
+        if ($deleted) {
+            setcookie('email', '', time() - 3600, '/');
+            header('Location: index.php');
+            exit;
+        }
+    } else {
+        echo 'Email not found to delete';
+    }
+}
 ?>
 
 <!DOCTYPE html>

@@ -1,17 +1,15 @@
 <?php
 include '../logic.php';
-if (isset($_POST['sign_out'])) {
-    if (isset($_COOKIE['email'])) {
-        $deleted = deleteUser($_COOKIE['email']);
-        if ($deleted) {
-            header('Location: index.php');
-            exit;
-        }
-    } else {
-        echo 'Email not found to delete';
-    }
+$conn = mysqli_connect("localhost", "root", "", "library");
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
 }
+
+$sql = "SELECT * FROM book";
+$result = mysqli_query($conn, $sql);
+
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -23,8 +21,8 @@ if (isset($_POST['sign_out'])) {
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@40,700,1,200" />
 </head>
 
-<body class="relative">
-    <nav class="bg-gray-800 absolute w-screen">
+<body class="relative bg-slate-700">
+<nav class="bg-gray-800 fixed w-full top-0 z-50">
         <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
             <div class="relative flex h-16 items-center justify-between">
                 <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -80,6 +78,22 @@ if (isset($_POST['sign_out'])) {
         </div>
 
     </nav>
+
+    <div class="container mx-auto grid grid-cols-3 gap-4 p-4 mt-20">
+        <?php
+        if (mysqli_num_rows($result) > 0) {
+            while ($row = mysqli_fetch_assoc($result)) {
+                echo '<div class="bg-gray-200 p-4 rounded-md">';
+                echo '<img src="data:image/jpeg;base64,' . base64_encode($row['cover']) . '" class="h-40 w-full object-cover object-center mb-4" alt="Book Cover">';
+                echo '<p class="text-lg font-semibold">' . $row['title'] . '</p>';
+                echo '<p class="text-sm text-gray-600">By ' . $row['author'] . '</p>';
+                echo '</div>';
+            }
+        } else {
+            echo '<p>No books found.</p>';
+        }
+        ?>
+    </div>
 
     <script>
         document.getElementById('user-menu-button').addEventListener('click', function() {

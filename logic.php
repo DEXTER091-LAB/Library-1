@@ -53,11 +53,12 @@ function login($email, $password)
     }
 }
 
-function signUp($email, $password, $role)
+
+function signUp($email, $password)
 {
     global $conn;
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT); // Using bcrypt for password hashing
-    $sql = "INSERT INTO User (email, password, role) VALUES ('$email', '$hashedPassword', '$role')";
+    $sql = "INSERT INTO User (email, password) VALUES ('$email', '$hashedPassword')";
     $result = mysqli_query($conn, $sql);
     if (mysqli_affected_rows($conn) > 0) {
         return true;
@@ -65,19 +66,6 @@ function signUp($email, $password, $role)
         return false;
     }
 }
-
-// function signUp($email, $password)
-// {
-//     global $conn;
-//     $hashedPassword = password_hash($password, PASSWORD_DEFAULT); // Using bcrypt for password hashing
-//     $sql = "INSERT INTO User (email, password) VALUES ('$email', '$hashedPassword')";
-//     $result = mysqli_query($conn, $sql);
-//     if (mysqli_affected_rows($conn) > 0) {
-//         return true;
-//     } else {
-//         return false;
-//     }
-// }
 function getUserIdByEmail($email) {
     global $conn;
     $sql = "SELECT id FROM User WHERE email='$email'";
