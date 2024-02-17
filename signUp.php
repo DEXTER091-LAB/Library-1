@@ -1,15 +1,14 @@
 <?php
-include('./logic.php');
-
-// Check if the form is submitted
+include('../logic.php');
 if (isset($_POST['submit'])) {
     $email = $_POST['email'];
     $password = $_POST['password'];
     
-    // Set a cookie for the email
     setcookie('email', $email, time() + (86400 * 30), "./feedBack.php"); // Cookie lasts for 30 days
-    // Attempt to sign up the user
     $isSignedUp = signUp($email, $password);
+    if($isSignedUp) {
+        header('Location: index.php');
+    } 
 }
 ?>
 <!DOCTYPE html>
