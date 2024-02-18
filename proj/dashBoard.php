@@ -50,6 +50,19 @@ if (isset($_POST['deleteBookBtn'])) {
         echo "<script>alert('Error deleting book')</script>";
     }
 }
+if (isset($_POST['sign_out'])) {
+    if (isset($_COOKIE['email'])) {
+        $deleted = deleteUser($_COOKIE['email']);
+        
+        if ($deleted) {
+            setcookie('email', '', time() - 3600, '/');
+            header('Location: index.php');
+            exit;
+        }
+    } else {
+        echo 'Email not found to delete';
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -67,7 +80,7 @@ if (isset($_POST['deleteBookBtn'])) {
 </head>
 
 <body class="bg-gray-100 font-sans leading-normal tracking-normal">
-    
+
     <!-- Header -->
     <header>
         <nav aria-label="menu nav" class="bg-gray-800 py-4">
@@ -95,15 +108,18 @@ if (isset($_POST['deleteBookBtn'])) {
                         </button> -->
                         <!-- Dropdown for user actions -->
                         <div class="relative">
-                            <button onmouseover="toggleDD('adminDropdown')" class="text-white py-2 px-4 border border-white rounded-md">
+                            <button onmouseover="toggleDD('adminDropdown')" class="text-white py-2 px-4 border border-white rounded-md hover:bg-gray-700">
                                 <i class="fas fa-user-circle"></i>
                             </button>
-                            <div id="adminDropdown" class="dropdownlist absolute bg-gray-800 text-white right-0 mt-3 p-3 hidden">
-                                <a href="#" class="block">Profile</a>
-                                <a href="#" class="block">Settings</a>
-                                <a href="#" class="block">Log Out</a>
+                            <div id="adminDropdown" class="dropdownlist absolute bg-gray-800 text-white right-0 mt-3 p-3 hidden flex flex-col">
+                                <a href="#" class=" hover:bg-gray-700 px-4 py-2">Profile</a>
+                                <a href="#" class=" hover:bg-gray-700 px-4 py-2">Settings</a>
+                                <form method="post">
+                                <button type="submit" name="sign_out" class="block px-4 py-2 text-gray-100 hover:bg-gray-700" role="menuitem">Signout</button>
+                                </form>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>

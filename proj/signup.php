@@ -1,6 +1,6 @@
 <?php
 include('../logic.php');
-
+$error = '';
 if (isset($_POST['submit'])) {
     $email = $_POST['email'];
     $password = $_POST['password'];
@@ -9,13 +9,14 @@ if (isset($_POST['submit'])) {
     if ($password == $confirmPassword) {
         $isSignedUp = signUp($email, $password);
         if ($isSignedUp) {
+            setcookie('email', $email, time() + (86400 * 30), "/");
             header('Location: content.php');
             exit;
         } else {
-            echo '<p class="text-red-500">Signup failed. Please try again.</p>';
+            $error = '<p class="text-red-500">Signup failed. Please try again.</p>';
         }
     } else {
-        echo '<p class="text-red-500">Passwords do not match.</p>';
+        $error = '<p class="text-red-500">Passwords do not match.</p>';
     }
 }
 
@@ -62,6 +63,7 @@ if (isset($_POST['submit'])) {
                             </div>
                             <div class="ml-3 text-sm">
                                 <label for="terms" class="font-light text-gray-500 dark:text-gray-300">I accept the <a class="font-medium text-primary-600 hover:underline dark:text-primary-500" href="#">Terms and Conditions</a></label>
+                                <?php echo $error; ?>
                             </div>
                         </div>
                         <button type="submit" name="submit" class="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Create an account</button>
