@@ -113,7 +113,7 @@ if (isset($_POST['sign_out'])) {
                                 <i class="fas fa-user-circle"></i>
                             </button>
                             <div id="adminDropdown" class="dropdownlist absolute bg-gray-800 text-white right-0 mt-3 p-3 hidden flex flex-col">
-                                <a href="#" class=" hover:bg-gray-700 px-4 py-2">Profile</a>
+                                <a href="./content.php" class=" hover:bg-gray-700 px-4 py-2">Home</a>
                                 <a href="#" class=" hover:bg-gray-700 px-4 py-2">Settings</a>
                                 <form method="post">
                                 <button type="submit" name="sign_out" class="block px-4 py-2 text-gray-100 hover:bg-gray-700" role="menuitem">Signout</button>

@@ -4,11 +4,13 @@ $error = '';
 if (isset($_POST['submit'])) {
     $email = $_POST['email'];
     $password = $_POST['password'];
-    $role = $_POST['role'];
     $isLoggedIn = login($email, $password);
     if ($isLoggedIn) {
         setcookie('email', $email, time() + (86400 * 30), "/");
-        setcookie('role', $role, time() + (86400 * 30), "/");
+        $role = getUserRole($email);
+        if ($role) {
+            setcookie('role', $role, time() + (86400 * 30), "/");
+        }
         header('Location: content.php');
         exit;
     } else {
@@ -46,13 +48,6 @@ if (isset($_POST['submit'])) {
                         <div>
                             <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
                             <input type="password" name="password" id="password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="">
-                        </div>
-                        <div>
-                            <label for="role" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Role</label>
-                            <select name="role" id="role" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
-                                <option value="user">User</option>
-                                <option value="admin">Admin</option>
-                            </select>
                         </div>
                         <div class="flex items-center justify-between">
                             <div class="flex items-start">

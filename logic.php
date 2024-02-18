@@ -52,7 +52,17 @@ function login($email, $password)
         return false; // User not found
     }
 }
-
+function getUserRole($email) {
+    global $conn;
+    $query = "SELECT role FROM user WHERE email = '$email'";
+    $result = mysqli_query($conn, $query);
+    if ($result && mysqli_num_rows($result) > 0) {
+        $row = mysqli_fetch_assoc($result);
+        return $row['role'];
+    } else {
+        return null; 
+    }
+}
 
 function signUp($email, $password)
 {
