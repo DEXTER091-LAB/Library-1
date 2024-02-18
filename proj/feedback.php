@@ -83,6 +83,7 @@ if (isset($_POST['sign_out'])) {
                             ?>
                             <a href="./content.php" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Home</a>
                             <a href="./issueBook.php" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Issue Book</a>
+                            <a href="./returnBook.php" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Return Book</a>
                             <a href="./feedback.php" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Feedback</a>
                         </div>
                     </div>

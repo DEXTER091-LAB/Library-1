@@ -280,6 +280,60 @@ function deleteBook($id){
     }
 }
 
+function returnBook($bookName,$userId){
+    global $conn;
+    // Check if book exists and if then grab it's id and check if it's taken by the user
+    $bookId = getBookIdByTitle($bookName);
+    if (!$bookId) {
+        echo "Book not found";
+        return false;
+    }
+    $existingIssueSql = "SELECT * FROM issuedBooks WHERE userId = ? AND bookId = ?";
+    $stmt = mysqli_prepare($conn, $existingIssueSql);
+    if (!$stmt) {
+        echo "Error preparing statement: " . mysqli_error($conn);
+        return false;
+    }
+    mysqli_stmt_bind_param($stmt, "ii", $userId, $bookId);
+    mysqli_stmt_execute($stmt);
+    $existingIssueResult = mysqli_stmt_get_result($stmt);
+    if ($existingIssueResult && mysqli_num_rows($existingIssueResult) > 0) {
+        // Proceed with returning the book
+        $sql = "DELETE FROM issuedBooks WHERE userId = ? AND bookId = ?";
+        $stmt = mysqli_prepare($conn, $sql);
+        if (!$stmt) {
+            echo "Error preparing statement: " . mysqli_error($conn);
+            return false;
+        }
+        mysqli_stmt_bind_param($stmt, "ii", $userId, $bookId);
+        $result = mysqli_stmt_execute($stmt);
+        if ($result) {
+            // Update quantity of the book
+            $updateQuantitySql = "UPDATE Book SET Quantity = Quantity + 1 WHERE id = ?";
+            $stmt = mysqli_prepare($conn, $updateQuantitySql);
+            if (!$stmt) {
+                echo "Error preparing statement: " . mysqli_error($conn);
+                return false;
+            }
+            mysqli_stmt_bind_param($stmt, "i", $bookId);
+            $result = mysqli_stmt_execute($stmt);
+            if ($result) {
+                return true;
+            } else {
+                echo "Error updating book quantity: " . mysqli_error($conn);
+                return false;
+            }
+        } else {
+            echo "Error returning book: " . mysqli_error($conn);
+            return false;
+        }
+    } else {
+        echo "Book is not issued to the user";
+        return false;
+    }
+
+}
+
 function loopGOAround(){
     global $conn;
     $count=0;
