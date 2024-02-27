@@ -430,7 +430,7 @@ function hasIssuedBooks($userId)
     global $conn;
     $bookSQL = "SELECT * FROM Book WHERE takenById='$userId';";
     $bookquery = mysqli_query($conn, $bookSQL);
-    if ($bookquery) { // Check if the query was successful
+    if ($bookquery) { 
         $hasbook = mysqli_num_rows($bookquery);
         if ($hasbook > 0) {
             return true;
